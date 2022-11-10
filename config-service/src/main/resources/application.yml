@@ -1,0 +1,22 @@
+debug: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:9091/eureka/
+
+server:
+  port: 9080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/febrihasan/configuration.git
+          search-paths: spring-boot-micro-keycloak
+          default-label: main
