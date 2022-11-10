@@ -1,5 +1,5 @@
 spring:
   application:
-    name: keycloak-service
+    name: transaction-service
   config:
     import: configserver:http://localhost:9080/api

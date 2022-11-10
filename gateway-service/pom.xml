@@ -18,14 +18,27 @@
 		<spring-cloud.version>2021.0.5</spring-cloud.version>
 	</properties>
 	<dependencies>
+		<!--  [BEGIN] Spring Config -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<!--  [END] Spring Config  -->
+
+		<!--  [BEGIN] Spring WebFlux  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+		<!--  [END] Spring WebFlux  -->
+
+		<!--  [BEGIN] Spring Gateway  -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
+		<!--  [END] Spring Gateway  -->
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>

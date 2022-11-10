@@ -26,10 +26,12 @@
 		</dependency>
 		<!--  [END] Spring Actuator  -->
 
-		<!--<dependency>
+		<!--  [BEGIN] Spring Config -->
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-config</artifactId>
-		</dependency>-->
+		</dependency>
+		<!--  [END] Spring Config  -->
 
 		<!--  [BEGIN] Spring Security  -->
 		<dependency>
@@ -38,13 +40,6 @@
 		</dependency>
 		<!--  [END] Spring Security  -->
 
-		<!--  [BEGIN] Keycloak Adapter  -->
-		<dependency>
-			<groupId>org.keycloak</groupId>
-			<artifactId>keycloak-spring-boot-starter</artifactId>
-			<version>${org.keycloak.version}</version>
-		</dependency>
-		<!--  [END] Keycloak Adapter  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -53,7 +48,18 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
 
+		<!--  [BEGIN] Keycloak Adapter  -->
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-spring-boot-starter</artifactId>
+			<version>${org.keycloak.version}</version>
+		</dependency>
+		<!--  [END] Keycloak Adapter  -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
