@@ -3,16 +3,17 @@ debug: true
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:9091/eureka/
+      defaultZone: http://localhost:1000/api/eureka/
 
 server:
-  port: 9080
+  port: 1001
   servlet:
     context-path: /api
 
 spring:
   application:
     name: config-service
+  # cloud configuration
   cloud:
     config:
       server:
@@ -20,3 +21,14 @@ spring:
           uri: https://github.com/febrihasan/configuration.git
           search-paths: spring-boot-micro-keycloak
           default-label: main
+  # database repository
+  datasource:
+    url: jdbc:postgresql://localhost:5432/keycloak_micro
+    username: postgres
+    password: postgres
+  # flyway migration
+  flyway:
+    enabled: true
+  # jpa / hibernate
+  jpa:
+    show-sql: true

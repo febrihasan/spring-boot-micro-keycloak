@@ -6,12 +6,20 @@ import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
+import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.admin.client.token.TokenManager;
 import org.keycloak.representations.AccessTokenResponse;
+import org.keycloak.representations.idm.CredentialRepresentation;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 
+import javax.ws.rs.core.Response;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * @author febrihasan
@@ -42,6 +50,14 @@ public class KeycloakProvider {
     private String clientId;
 
     /**
+     * Get client id keycloak from application.yml
+     *
+     * @version 1
+     */
+    @Value("${master.keycloak.resource}")
+    private String clientIdAdmin;
+
+    /**
      * Get client credential keycloak from application.yml
      *
      * @version 1
@@ -49,7 +65,36 @@ public class KeycloakProvider {
     @Value("${keycloak.credentials.secret}")
     private String clientSecret;
 
+    /**
+     * Get username keycloak from application.yml
+     *
+     * @version 1
+     */
+    @Value("${master.keycloak.username}")
+    private String username;
+
+    /**
+     * Get password keycloak from application.yml
+     *
+     * @version 1
+     */
+    @Value("${master.keycloak.password}")
+    private String password;
+
     public KeycloakProvider() { /* constructor */ }
+
+    private Keycloak getInstance() {
+        return KeycloakBuilder
+                .builder()
+                .serverUrl(serverUrl)
+                .realm(realm)
+                .username(username)
+                .password(password)
+                .clientId(clientIdAdmin)
+                .clientSecret(clientSecret)
+                .grantType(OAuth2Constants.PASSWORD)
+                .build();
+    }
 
     /**
      * Access keycloak with credentials
@@ -96,6 +141,63 @@ public class KeycloakProvider {
             log.error("Error found: {}", e.getMessage());
             return Optional.empty();
         }
+    }
+
+    /**
+     * Access keycloak with password credentials
+     * To login user with username and password access on user realm
+     *
+     * @param username
+     * @param password
+     * @param email
+     * @return keycloak object
+     */
+    public UserRepresentation registerNewUser
+    (String username, String password, String email) {
+        log.info("Registration: {}, {}", username, email);
+        try {
+            UsersResource usersResource = getInstance().realm(realm).users();
+            CredentialRepresentation credential = createPasswordCredentials(password);
+
+            UserRepresentation user = new UserRepresentation();
+            user.setUsername(username);
+            user.setFirstName("First Name");
+            user.setLastName("Last Name");
+            user.setEmail(email);
+            user.setEmailVerified(false);
+            user.setEnabled(true);
+            user.singleAttribute("customAttribute", "customAttribute");
+            user.setCredentials(Arrays.asList(credential));
+
+            Optional<Response> response = Optional.of(usersResource.create(user));
+            if (response.isPresent()) {
+
+                if (response.get().getStatus() == HttpStatus.CREATED.value()) {
+                    List<UserRepresentation> userList = usersResource
+                            .search(username)
+                            .stream()
+                            .filter(userResp -> userResp.getUsername().equals(username))
+                            .collect(Collectors.toList());
+
+                    log.info("User with id: " + userList.get(0).getId() + " created");
+                    return userList.get(0);
+                }
+
+                throw new RuntimeException();
+            }
+        } catch (Exception e) {
+            log.error("Error found: {}", e.getMessage());
+        }
+
+        return null;
+    }
+
+    private CredentialRepresentation createPasswordCredentials(String password) {
+        CredentialRepresentation passwordCredentials = new CredentialRepresentation();
+        passwordCredentials.setTemporary(false);
+        passwordCredentials.setType(OAuth2Constants.PASSWORD);
+        passwordCredentials.setValue(password);
+        return passwordCredentials;
     }
 
     /**

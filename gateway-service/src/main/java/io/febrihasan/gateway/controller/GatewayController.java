@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author febrihasan
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/gateway")
 public class GatewayController {
 
     @GetMapping

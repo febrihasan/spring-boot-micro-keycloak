@@ -2,9 +2,12 @@ package io.febrihasan.keycloak.controller;
 
 import io.febrihasan.keycloak.configuration.provider.KeycloakProvider;
 import io.febrihasan.keycloak.dto.request.LoginRequest;
-import io.febrihasan.keycloak.dto.response.LoginResponse;
+import io.febrihasan.keycloak.dto.request.RegisterRequest;
+import io.febrihasan.keycloak.dto.response.RegisterResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.AccessTokenResponse;
+import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +17,9 @@ import java.util.Optional;
 /**
  * @author febrihasan
  */
+@Slf4j
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/keycloak")
 @RequiredArgsConstructor
 public class KeycloakController {
 
@@ -26,18 +30,30 @@ public class KeycloakController {
         return "Welcome to Keycloak Service";
     }
 
+    @PostMapping("/register")
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
+        log.info("Registration: {} {}", request.getUsername(), request.getEmail());
+        Optional<UserRepresentation> response = Optional.ofNullable(keycloakProvider
+                .registerNewUser(
+                        request.getUsername(), request.getPassword(), request.getEmail()));
+        if (response.isPresent()) {
+            return ResponseEntity.ok(new RegisterResponse(response.get().getId(), response.get().getUsername()));
+        }
+
+        throw new RuntimeException();
+    }
+
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
+    public ResponseEntity<AccessTokenResponse> login(@RequestBody LoginRequest request) {
+        log.info("Login: {}", request.getUsername());
         Optional<AccessTokenResponse> response = keycloakProvider
                 .newKeycloakBuilderWithPasswordCredentials(
-                        request.getPhoneNumber(), request.getPassword());
+                        request.getUsername(), request.getPassword());
+        if (response.isPresent()) {
+            return ResponseEntity.ok(response.get());
+        }
 
-        LoginResponse result = new LoginResponse();
-        result.setAccessToken(response.get().getToken());
-        result.setTokenType(response.get().getTokenType());
-        result.setRefreshToken(response.get().getRefreshToken());
-        result.setPin(false);
-        return ResponseEntity.ok(result);
+        throw new RuntimeException();
     }
 
     @GetMapping("/userinfo")

@@ -15,11 +15,20 @@ public class RouterConfig {
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p
+                        .path("/api/admin/**")
+                        .uri("lb://admin-service"))
+                .route(p -> p
                         .path("/api/config/**")
                         .uri("lb://config-service"))
                 .route(p -> p
-                        .path("/api/auth/**")
+                        .path("/api/keycloak/**")
                         .uri("lb://keycloak-service"))
+                .route(p -> p
+                        .path("/api/mail/**")
+                        .uri("lb://mail-service"))
+                .route(p -> p
+                        .path("/api/report/**")
+                        .uri("lb://report-service"))
                 .route(p -> p
                         .path("/api/user/**")
                         .uri("lb://user-service"))

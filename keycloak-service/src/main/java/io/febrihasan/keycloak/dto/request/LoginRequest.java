@@ -10,10 +10,8 @@ import lombok.Data;
  */
 @Data
 public class LoginRequest {
-    @JsonProperty("phone_number")
-    private String phoneNumber;
+    @JsonProperty("username")
+    private String username;
     @JsonProperty("password")
     private String password;
-    @JsonProperty("signature")
-    private String signature;
 }

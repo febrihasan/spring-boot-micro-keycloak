@@ -1,5 +1,7 @@
 server:
-  port: 9091
+  port: 1000
+  servlet:
+    context-path: /api
 
 spring:
   application:
@@ -8,6 +10,13 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:9091/eureka/
+      defaultZone: http://localhost:1000/api/eureka/
     register-with-eureka: false
     fetch-registry: false
+
+# management
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'

@@ -62,7 +62,7 @@ public class KeycloakSecurityConfig extends KeycloakWebSecurityConfigurerAdapter
         super.configure(http);
         http
                     .authorizeRequests()
-                    .antMatchers("/user")
+                    .antMatchers("/actuator/*", "/user", "/user/login", "/user/registration")
                     .permitAll()
                 .and()
                     .authorizeRequests()

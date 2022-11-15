@@ -18,10 +18,19 @@
 		<spring-cloud.version>2021.0.4</spring-cloud.version>
 	</properties>
 	<dependencies>
+		<!--  [BEGIN] Spring Actuator  -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<!--  [END] Spring Actuator  -->
+
+		<!--  [BEGIN] Spring Cloud Eureka for Server  -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
+		<!--  [END] Spring Cloud Eureka for Server  -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
