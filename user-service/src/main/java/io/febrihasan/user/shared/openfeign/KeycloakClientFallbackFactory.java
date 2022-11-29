@@ -32,6 +32,11 @@ public class KeycloakClientFallbackFactory implements FallbackFactory<KeycloakCl
                 log.error("Login exception");
                 return new HashMap<>();
             }
+
+            @Override
+            public Map<String, String> logout(String authorization, String username) {
+                return null;
+            }
         };
     }
 }

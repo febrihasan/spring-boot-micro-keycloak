@@ -14,4 +14,6 @@ public interface UserService {
 
     LoginResponse login(LoginRequest request);
 
+    void logout(String username);
+
 }

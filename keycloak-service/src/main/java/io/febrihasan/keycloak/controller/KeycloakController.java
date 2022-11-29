@@ -4,6 +4,9 @@ import io.febrihasan.keycloak.configuration.provider.KeycloakProvider;
 import io.febrihasan.keycloak.dto.request.LoginRequest;
 import io.febrihasan.keycloak.dto.request.RegisterRequest;
 import io.febrihasan.keycloak.dto.response.RegisterResponse;
+import io.febrihasan.keycloak.openfeign.admin.KeycloakAdmin;
+import io.febrihasan.keycloak.service.internal.KeycloakService;
+import io.febrihasan.keycloak.utils.BaseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.keycloak.representations.AccessTokenResponse;
@@ -12,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Optional;
 
 /**
  * @author febrihasan
@@ -23,7 +25,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class KeycloakController {
 
-    public final KeycloakProvider keycloakProvider;
+    private final KeycloakService keycloakService;
 
     @GetMapping
     public String index() {
@@ -33,11 +35,9 @@ public class KeycloakController {
     @PostMapping("/register")
     public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
         log.info("Registration: {} {}", request.getUsername(), request.getEmail());
-        Optional<UserRepresentation> response = Optional.ofNullable(keycloakProvider
-                .registerNewUser(
-                        request.getUsername(), request.getPassword(), request.getEmail()));
-        if (response.isPresent()) {
-            return ResponseEntity.ok(new RegisterResponse(response.get().getId(), response.get().getUsername()));
+        UserRepresentation user = keycloakService.registration(request);
+        if (BaseUtils.isNotNull(user)) {
+            return ResponseEntity.ok(new RegisterResponse(user.getId(), user.getUsername()));
         }
 
         throw new RuntimeException();
@@ -46,14 +46,13 @@ public class KeycloakController {
     @PostMapping("/login")
     public ResponseEntity<AccessTokenResponse> login(@RequestBody LoginRequest request) {
         log.info("Login: {}", request.getUsername());
-        Optional<AccessTokenResponse> response = keycloakProvider
-                .newKeycloakBuilderWithPasswordCredentials(
-                        request.getUsername(), request.getPassword());
-        if (response.isPresent()) {
-            return ResponseEntity.ok(response.get());
-        }
+        return ResponseEntity.ok(keycloakService.login(request));
+    }
 
-        throw new RuntimeException();
+    @DeleteMapping("/logout/{username}")
+    public ResponseEntity<Boolean> logout(@PathVariable String username) {
+        log.info("Logout key: {}", username);
+        return ResponseEntity.ok(keycloakService.logout(username));
     }
 
     @GetMapping("/userinfo")

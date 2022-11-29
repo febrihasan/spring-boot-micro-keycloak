@@ -7,13 +7,9 @@ import io.febrihasan.user.dto.response.RegistrationResponse;
 import io.febrihasan.user.service.internal.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -50,6 +46,12 @@ public class UserController {
     @PostMapping("/registration")
     public ResponseEntity<RegistrationResponse> registration(@RequestBody RegistrationRequest request) {
         return ResponseEntity.ok(new RegistrationResponse(userService.registration(request)));
+    }
+
+    @DeleteMapping("/logout/{username}")
+    public ResponseEntity<Void> logout(@PathVariable String username) {
+        userService.logout(username);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

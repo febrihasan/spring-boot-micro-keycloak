@@ -83,7 +83,7 @@ public class KeycloakProvider {
 
     public KeycloakProvider() { /* constructor */ }
 
-    private Keycloak getInstance() {
+    public Keycloak getInstance() {
         return KeycloakBuilder
                 .builder()
                 .serverUrl(serverUrl)

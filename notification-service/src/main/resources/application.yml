@@ -1,5 +1,5 @@
 spring:
   application:
-    name: mail-service
+    name: notification-service
   config:
     import: configserver:http://localhost:1001/api

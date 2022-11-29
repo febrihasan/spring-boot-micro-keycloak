@@ -24,8 +24,8 @@ public class RouterConfig {
                         .path("/api/keycloak/**")
                         .uri("lb://keycloak-service"))
                 .route(p -> p
-                        .path("/api/mail/**")
-                        .uri("lb://mail-service"))
+                        .path("/api/notification/**")
+                        .uri("lb://notification-service"))
                 .route(p -> p
                         .path("/api/report/**")
                         .uri("lb://report-service"))

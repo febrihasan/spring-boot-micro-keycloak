@@ -5,8 +5,7 @@ import io.febrihasan.user.dto.request.RegistrationRequest;
 import io.febrihasan.user.dto.response.LoginResponse;
 import io.febrihasan.user.dto.response.RegistrationResponse;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -24,7 +23,11 @@ public interface KeycloakClient {
     @PostMapping("/register")
     Map<String, String> registration(@RequestBody RegistrationRequest request);
 
-    @PostMapping(value = "/login")
+    @PostMapping("/login")
     Map<String, String> login(@RequestBody LoginRequest request);
+
+    @DeleteMapping("/logout/{username}")
+    Map<String, String> logout(@RequestHeader("Authorization") String authorization,
+                               @PathVariable String username);
 
 }
