@@ -5,19 +5,21 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/user-service/pom.xml" />
-        <option value="$PROJECT_DIR$/config-service/pom.xml" />
-        <option value="$PROJECT_DIR$/gateway-service/pom.xml" />
-        <option value="$PROJECT_DIR$/admin-service/pom.xml" />
-        <option value="$PROJECT_DIR$/gateway-v2-service/pom.xml" />
         <option value="$PROJECT_DIR$/mail-service/pom.xml" />
-        <option value="$PROJECT_DIR$/report-service/pom.xml" />
-        <option value="$PROJECT_DIR$/notification-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/admin-service/pom.xml" />
         <option value="$PROJECT_DIR$/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/config-service/pom.xml" />
+        <option value="$PROJECT_DIR$/eureka-service/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway-service/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway-v2-service/pom.xml" />
+        <option value="$PROJECT_DIR$/keycloak-service/pom.xml" />
+        <option value="$PROJECT_DIR$/notification-service/pom.xml" />
+        <option value="$PROJECT_DIR$/report-service/pom.xml" />
+        <option value="$PROJECT_DIR$/user-service/pom.xml" />
       </set>
     </option>
   </component>

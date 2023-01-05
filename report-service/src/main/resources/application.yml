@@ -1,5 +1,0 @@
-spring:
-  application:
-    name: report-service
-  config:
-    import: configserver:http://localhost:1001/api
