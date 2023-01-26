@@ -31,15 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### K8s ###
-k8s/
-
-### Docker ###
-Dockerfile
-
-### Jenkis ###
-Jenkisfile
-
-### Skaffold ###
-skaffold.yml

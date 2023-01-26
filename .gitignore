@@ -36,3 +36,15 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### K8s ###
+k8s/
+
+### Docker ###
+Dockerfile
+
+### Jenkis ###
+Jenkisfile
+
+### Skaffold ###
+skaffold.yml
