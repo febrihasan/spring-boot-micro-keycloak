@@ -44,7 +44,7 @@ k8s/
 Dockerfile
 
 ### Jenkis ###
-Jenkisfile
+Jenkinsfile
 
 ### Skaffold ###
 skaffold.yml
