@@ -31,9 +31,6 @@ _keycloak-service/src/main/java/io/febrihasan/keycloak/configuration/KeycloakSec
 Ukeycloak-service/src/main/java/io/febrihasan/keycloak/KeycloakServiceApplication.java,a\a\aacd851f625bd614aa1f0bea49983e3219c25c1c
 D
 user-service/pom.xml,d\2\d2f5d1978e5f519100a679c4109f89296278badc
-:
-
-.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 H
