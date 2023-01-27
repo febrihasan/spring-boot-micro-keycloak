@@ -1,3 +1,4 @@
+### application admin service ###
 spring:
   application:
     name: admin-service
